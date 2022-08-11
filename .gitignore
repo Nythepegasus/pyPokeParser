@@ -1,0 +1,4 @@
+.DS_Store
+*.gba
+*.sav
+__pycache__

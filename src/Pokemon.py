@@ -55,7 +55,7 @@ class Gen3Pokemon:
         self.data = bytearray(data)
         self._encrypted_data = self.encrypted_data
         if len(self.data) != 100:
-            raise ValueError(f"Expected 100 bytes, only got {len(self.data)}")
+            raise ValueError(f"Expected 100 bytes, got {len(self.data)}")
 
     @classmethod
     def from_data(cls, data):

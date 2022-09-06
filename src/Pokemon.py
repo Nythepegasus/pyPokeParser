@@ -38,15 +38,114 @@ class Attack(Subsection):
     def __init__(self, data) -> None:
         super().__init__(data)
 
+    @property
+    def move_one(self):
+        return self.data[0x00:0x02]
+
+    @property
+    def move_two(self):
+        return self.data[0x02:0x04]
+
+    @property
+    def move_three(self):
+        return self.data[0x04:0x06]
+
+    @property
+    def move_four(self):
+        return self.data[0x06:0x08]
+
+    @property
+    def pp_one(self):
+        return self.data[0x08:0x09]
+
+    @property
+    def pp_two(self):
+        return self.data[0x09:0x10]
+
+    @property
+    def pp_three(self):
+        return self.data[0x10:0x11]
+
+    @property
+    def pp_four(self):
+        return self.data[0x11:0x12]
 
 class EVCondition(Subsection):
     def __init__(self, data) -> None:
         super().__init__(data)
 
+    @property
+    def hp(self):
+        return self.data[0x00:0x01]
+
+    @property
+    def attack(self):
+        return self.data[0x01:0x02]
+
+    @property
+    def defense(self):
+        return self.data[0x02:0x03]
+
+    @property
+    def speed(self):
+        return self.data[0x03:0x04]
+
+    @property
+    def sp_attack(self):
+        return self.data[0x04:0x05]
+
+    @property
+    def sp_defense(self):
+        return self.data[0x05:0x06]
+
+    @property
+    def coolness(self):
+        return self.data[0x06:0x07]
+
+    @property
+    def beauty(self):
+        return self.data[0x07:0x08]
+
+    @property
+    def cuteness(self):
+        return self.data[0x08:0x09]
+
+    @property
+    def smartness(self):
+        return self.data[0x09:0x10]
+
+    @property
+    def toughness(self):
+        return self.data[0x10:0x11]
+
+    @property
+    def feel(self):
+        return self.data[0x11:0x12]
 
 class Misc(Subsection):
     def __init__(self, data) -> None:
         super().__init__(data)
+    
+    @property
+    def pokerus(self):
+        return self.data[0x00:0x01]
+
+    @property
+    def met_location(self):
+        return self.data[0x01:0x02]
+
+    @property
+    def origins(self):
+        return self.data[0x02:0x04]
+
+    @property
+    def ivs_egg_ability(self):
+        # TODO: Split data
+        return self.data[0x04:0x08]
+
+    @property
+    def ribbons_obedience(self):
+        return self.data[0x08:0x12]
 
 
 class Gen3Pokemon:

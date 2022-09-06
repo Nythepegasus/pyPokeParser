@@ -6,69 +6,169 @@ class Subsection:
         self.data = data
 
 class Growth(Subsection):
+    SPECIES = open("pokemon.txt").read().split("\n")
     def __init__(self, data) -> None:
         super().__init__(data)
+        self._species = data[0x00:0x02]
+        self._item = data[0x02:0x04]
+        self._experience = data[0x04:0x08]
+        self._pp = data[0x08:0x09]
+        self._friendship = data[0x09:0x0a]
+        self._unknown = data[0x0a:0x0c]
     
     @property
     def species(self):
-        return self.data[0x00:0x02]
+        species_index = int.from_bytes(self._species, "little")
+        name = SPECIES[species_index]
+        return name
+
+    @species.setter
+    def species(self, sp: [str, int]):
+        if isinstance(sp, str):
+            sp = SPECIES.index(sp)
+        elif isinstance(species, int):
+            sp = sp
+        else:
+            raise ValueError("Expected type 'str' or 'int' got ", type(sp))
+
+        self._species = sp.to_bytes(2, "little")
     
     @property
     def item(self):
-        return self.data[0x02:0x04]
+        it = ITEMS[int.from_bytes(self._item, "little")]
+        return it
+
+    @item.setter
+    def item(self, it: [str, int]):
+        if isinstance(sp, str):
+            sp = ITEMS.index(sp)
+        elif isinstance(species, int):
+            sp = sp
+        else:
+            raise ValueError("Expected type 'str' or 'int' got ", type(sp))
+
+        self._species = sp.to_bytes(2, "little")
     
     @property
     def experience(self):
-        return self.data[0x04:0x08]
+        return int.from_bytes(self._experience, "little")
     
     @property
-    def pp_bonus(self):
-        return self.data[0x08:0x09]
+    def pp(self):
+        return self._pp
     
     @property
     def friendship(self):
-        return self.data[0x09:0x10]
+        return int.from_bytes(self._friendship, "little")
+
+    @friendship.setter
+    def friendship(self, fr: int):
+        if not 0 <= fr <= 255:
+            raise ValueError("Expected a value between 0 and 255, got ", fr, " instead.")
+
+        self._friendship = fr.to_bytes(1, "little")
     
     @property
     def unknown(self):
-        return self.data[0x10:0x12]
+        return self._unknown
+
+    @unknown.setter
+    def unknown(self, _):
+        raise ValueError("This is unknown/unused, setting it is unrecommended.")
 
 
 class Attack(Subsection):
+    MOVES = open("moves.txt").read().split("\n")
     def __init__(self, data) -> None:
         super().__init__(data)
+        self._move_one = self.data[0x00:0x02]
+        self._move_two = self.data[0x02:0x04]
+        self._move_three = self.data[0x04:0x06]
+        self._move_four = self.data[0x06:0x08]
+        self._pp_one = self.data[0x08:0x09]
+        self._pp_two = self.data[0x09:0x0a]
+        self._pp_three = self.data[0x0a:0x0b]
+        self._pp_four = self.data[0x0b:0x0c]
 
     @property
     def move_one(self):
-        return self.data[0x00:0x02]
+        mv = self.MOVES[int.from_bytes(self._move_one, "little") - 1]
+        return mv
+
+    @move_one.setter
+    def move_one(self, move: [str, int]):
+        if isinstance(move, str):
+            move = self.MOVES.index(move) - 1
+        elif isinstance(move, int):
+            move = move - 1
+        else:
+            raise ValueError("Expected 'str' or 'int' got ", type(move))
+
+        self._move_one = move.to_bytes(2, "little")
 
     @property
     def move_two(self):
-        return self.data[0x02:0x04]
+        mv = self.MOVES[int.from_bytes(self._move_two, "little") - 1]
+        return mv
+
+    @move_two.setter
+    def move_two(self, move: [str, int]):
+        if isinstance(move, str):
+            move = self.MOVES.index(move) - 1
+        elif isinstance(move, int):
+            move = move - 1
+        else:
+            raise ValueError("Expected 'str' or 'int' got ", type(move))
+
+        self._move_two = move.to_bytes(2, "little")
 
     @property
     def move_three(self):
-        return self.data[0x04:0x06]
+        mv = self.MOVES[int.from_bytes(self._move_three, "little") - 1]
+        return mv
+
+    @move_three.setter
+    def move_three(self, move: [str, int]):
+        if isinstance(move, str):
+            move = self.MOVES.index(move) - 1
+        elif isinstance(move, int):
+            move = move - 1
+        else:
+            raise ValueError("Expected 'str' or 'int' got ", type(move))
+
+        self._move_three = move.to_bytes(2, "little")
 
     @property
     def move_four(self):
-        return self.data[0x06:0x08]
+        mv = self.MOVES[int.from_bytes(self._move_four, "little") - 1]
+        return mv
+
+    @move_four.setter
+    def move_four(self, move: [str, int]):
+        if isinstance(move, str):
+            move = self.MOVES.index(move) - 1
+        elif isinstance(move, int):
+            move = move - 1
+        else:
+            raise ValueError("Expected 'str' or 'int' got ", type(move))
+
+        self._move_four = move.to_bytes(2, "little")
 
     @property
     def pp_one(self):
-        return self.data[0x08:0x09]
+        return int.from_bytes(self._pp_one, "little")
 
     @property
     def pp_two(self):
-        return self.data[0x09:0x10]
+        return int.from_bytes(self._pp_two, "little")
 
     @property
     def pp_three(self):
-        return self.data[0x10:0x11]
+        return int.from_bytes(self._pp_three, "little")
 
     @property
     def pp_four(self):
-        return self.data[0x11:0x12]
+        return int.from_bytes(self._pp_four, "little")
 
 class EVCondition(Subsection):
     def __init__(self, data) -> None:

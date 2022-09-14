@@ -1,5 +1,4 @@
-from multiprocessing.sharedctypes import Value
-from Pokemon import Gen3Pokemon
+from .Pokemon import Gen3Pokemon
 
 SECTION_NAMES = {
     "0000": "Trainer Info",

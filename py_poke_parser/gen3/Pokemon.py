@@ -1,3 +1,4 @@
+import os
 
 class Subsection:
     def __init__(self, data) -> None:
@@ -6,7 +7,7 @@ class Subsection:
         self.data = data
 
 class Growth(Subsection):
-    SPECIES = open("pokemon.txt").read().split("\n")
+    SPECIES = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "pokemon.txt")).read().split("\n")
     def __init__(self, data) -> None:
         super().__init__(data)
         self._species = data[0x00:0x02]
@@ -78,7 +79,7 @@ class Growth(Subsection):
 
 
 class Attack(Subsection):
-    MOVES = open("moves.txt").read().split("\n")
+    MOVES = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "moves.txt")).read().split("\n")
     def __init__(self, data) -> None:
         super().__init__(data)
         self._move_one = self.data[0x00:0x02]
@@ -249,7 +250,8 @@ class Misc(Subsection):
 
 
 class Gen3Pokemon:
-    SUBORDERS = open("suborders.txt").read().split("\n")
+    
+    SUBORDERS = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "suborders.txt")).read().split("\n")
     def __init__(self, data):
         self.data = bytearray(data)
         self._encrypted_data = self.encrypted_data

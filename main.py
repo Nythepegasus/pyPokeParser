@@ -1,4 +1,4 @@
-import Sections
+import py_poke_parser.gen3.Sections as Sections
 
 
 class Gen3Save:
